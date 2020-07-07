@@ -17,23 +17,26 @@ client_socket.connect((HOST, PORT))
 
 # 키보드로 입력한 문자열을 서버로 전송하고 
 # 서버에서 에코되어 돌아오는 메시지를 받으면 화면에 출력
-# quit를 입력할 때 까지 반복
 
 name = input('Enter name : ')
 
-client_socket.send(name.encode()) 
-data = client_socket.recv(1024) 
-print('Received from the server :', str(data.decode('utf-8'))) 
+client_socket.send(name.encode('utf-8')) 
+return_name = client_socket.recv(1024) 
+print('Received from the server :', str(return_name.decode('utf-8'))) 
 print("자판기 이용을 시작하겠습니다.")
 
+# 자판기 종료 버튼 누를 때까지 계속
 while True: 
+    # 자판기화면 출력 및 선택한 메뉴에 대한 명령 실행 결과 출력
     data = client_socket.recv(1024)
     print(str(data.decode('utf-8')))
     
+    # 자판기 메뉴를 선택한 번호를 서버로 전송
     answer = input('Enter answer : ')
-    client_socket.send(answer.encode()) 
+    client_socket.send(answer.encode('utf-8')) 
 
     if answer == "0":
+        print("자판기 이용을 종료합니다.")
         break
 
 client_socket.close() 
