@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket demo</title>
+        <style>
+            table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+        </style>
+    </head>
+    <body>
+    <h1></h1>
+    <h3>menu</h3>
+    <table style="width:100%">
+  <tr>
+    <th>Item</th>
+    <th>Price</th> 
+    <th>Stock</th>
+    <th>Choice</th>
+  </tr>
+  <tr>
+    <td class="item"></td>
+    <td class="price"></td>
+    <td class="stock"></td>
+    <td><button onclick="sendData(1)">Choice</button></td>
+  </tr>
+  <tr>
+    <td>커피</td>
+    <td>500원</td>
+    <td>94</td>
+    <td><button>Choice</button></td>
+  </tr>
+  <tr>
+    <td>이온음료</td>
+    <td>550원</td>
+    <td>80</td>
+    <td><button>Choice</button></td>
+  </tr>
+
+  <tr>
+    <td>고급커피</td>
+    <td>700원</td>
+    <td>80</td>
+    <td><button>Choice</button></td>
+  </tr>
+
+  <tr>
+    <td>탄산음료</td>
+    <td>750원</td>
+    <td>80</td>
+    <td><button>Choice</button></td>
+  </tr>
+</table>
+        <script type="text/javascript">
+            const mes = document.querySelector("h1");
+            const menuTable = document.querySelector("stock");
+
+            var ws = new WebSocket("ws://127.0.0.1:5678/");
+            function sendData(num){
+                ws.send(num);
+            }
+
+            ws.onmessage = function(message){
+                mes.innerHTML = message.data;
+            }
+                
+            
+        </script>
+    </body>
+</html>
